@@ -53,8 +53,8 @@ def main() -> None:
         logging.warning("[main] 未获取到任何公告，退出")
         sys.exit(0)
 
-    # 2. 过滤出未处理的新公告
-    new_ones = [a for a in announcements if not is_seen(a["id"])]
+    # 2. 过滤出未处理的新公告，反转为时间正序（旧→新），确保 Discord 推送顺序正确
+    new_ones = [a for a in announcements if not is_seen(a["id"])][::-1]
     logging.info(f"[main] 共 {len(announcements)} 条公告，其中 {len(new_ones)} 条未处理")
 
     if not new_ones:
